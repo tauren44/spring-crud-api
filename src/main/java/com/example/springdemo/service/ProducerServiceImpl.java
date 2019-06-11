@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ProducerServiceImpl implements ProducerService {
@@ -18,12 +20,12 @@ public class ProducerServiceImpl implements ProducerService {
 
     @Override
     public void createProducer(Producer producer) {
-        repository.save(mapper.mapProducerToEntity(producer));
+        repository.save(mapper.toEntity(producer));
     }
 
     @Override
     public void updateProducer(Producer producer) {
-        repository.save(mapper.mapProducerToEntity(producer));
+        repository.save(mapper.toEntity(producer));
     }
 
     @Override
@@ -33,11 +35,13 @@ public class ProducerServiceImpl implements ProducerService {
 
     @Override
     public Producer findProducerById(Long id) {
-        return mapper.mapEntityToProducer(repository.findById(id).orElseThrow(ProducerNotFoundException::new));
+        return mapper.toDto(repository.findById(id).orElseThrow(ProducerNotFoundException::new));
     }
 
     @Override
     public List<Producer> findAll() {
-        return mapper.mapEntitiesToProducers(repository.findAll());
+        return repository.findAll().stream()
+                .map(mapper::toDto)
+                .collect(toList());
     }
 }

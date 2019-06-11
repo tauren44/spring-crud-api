@@ -12,5 +12,5 @@ import java.math.BigDecimal;
 public class Product extends BaseDto {
     private String name;
     private BigDecimal price;
-    private Producer producer;
+    private Long producerId;
 }

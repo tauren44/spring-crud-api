@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductServiceImpl implements ProductService {
@@ -18,12 +20,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void createProduct(Product product) {
-        repository.save(mapper.mapProductToEntity(product));
+        repository.save(mapper.toEntity(product));
     }
 
     @Override
     public void updateProduct(Product product) {
-        repository.save(mapper.mapProductToEntity(product));
+        repository.save(mapper.toEntity(product));
     }
 
     @Override
@@ -33,11 +35,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findProductById(Long id) {
-        return mapper.mapEntityToProduct(repository.findById(id).orElseThrow(ProductNotFoundException::new)) ;
+        return mapper.toDto(repository.findById(id).orElseThrow(ProductNotFoundException::new)) ;
     }
 
     @Override
     public List<Product> findAll() {
-        return mapper.mapEntitiesToProducts(repository.findAll());
+        return repository.findAll().stream()
+                .map(mapper::toDto)
+                .collect(toList());
     }
 }

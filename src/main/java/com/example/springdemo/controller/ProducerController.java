@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +31,7 @@ public class ProducerController {
      * @return created entity, HTTP status OK
      */
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Producer> createProducer(@RequestBody Producer producer) {
         service.createProducer(producer);
         return new ResponseEntity<>(producer, HttpStatus.OK);
@@ -43,7 +42,7 @@ public class ProducerController {
      * @return response with updated entity and http status OK
      */
     @PutMapping(path = "/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Producer> updateProducer(@RequestBody Producer producer) {
         service.updateProducer(producer);
         return new ResponseEntity<>(producer, HttpStatus.OK);
@@ -53,7 +52,7 @@ public class ProducerController {
      * @return list of all producers
      */
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public List<Producer> findAll() {
         return service.findAll();
     }
@@ -64,7 +63,7 @@ public class ProducerController {
      * @return Http status with result
      */
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ProducerEntity> deleteProducer(@PathVariable(value = "id") Long id, ProducerEntity entity) {
         if (service.findProducerById(id) != null) {
             service.deleteProducer(id);
@@ -78,7 +77,7 @@ public class ProducerController {
      * @return response entity with producer inside if present
      */
     @GetMapping(path = "/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Producer> getProducer(@PathVariable("id") Long id) {
         Producer producer = service.findProducerById(id);
         if (producer == null) {
