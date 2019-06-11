@@ -42,10 +42,4 @@ public class UserMapper {
                 .map(this::mapEntityToUser)
                 .collect(toList());
     }
-
-//    public List<UserEntity> mapUsersToEntities(List<User> users) {
-//        return users.stream()
-//                .map(this::mapUserToEntity)
-//                .collect(toList());
-//    }
 }
